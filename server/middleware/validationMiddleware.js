@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator');
 
 // Validate user registration
+
 console.log('Using validation Middleware');
 
 const validateRegister = [

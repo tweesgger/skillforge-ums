@@ -8,14 +8,17 @@ const authenticateToken = (req, res, next) => {
   
   // Token usually comes as "Bearer <token>"
   const token = authHeader && authHeader.split(' ')[1];
-  
+  console.log(token);
   if (!token) {
     return res.status(401).json({ message: 'Access denied. No token provided.' });
   }
-
+  
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // Attach user info to request
+    console.log(decoded);
+    console.log(req.user);
+    
     next();
   } catch (error) {
     console.error(error.message);

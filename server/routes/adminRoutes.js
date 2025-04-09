@@ -8,7 +8,7 @@ const { validateRoleUpdate } = require('../middleware/validationMiddleware');
 console.log('using adminRoutes');
 // All routes here are protected and admin-only
 router.use(authenticateToken);
-router.use(authorizeRoles('admin'));
+router.use(authorizeRoles('admin','manager'));
 
 router.get('/users', adminController.getAllUsers);
 // Update user role route
