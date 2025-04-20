@@ -6,9 +6,9 @@ const pool = require('../config/db');
 console.log('authController begins');
 // Register User
 exports.register = async (req, res) => {
-  const { username, email, password } = req.body;
+  let { username, email, password, role } = req.body;
   // In registration endpoint
-  const role = req.body.role || 'user';  // Default to 'user' if not provided
+   role = req.body.role || 'user';  // Default to 'user' if not provided
 
   try {
     // Check if user already exists
@@ -28,7 +28,7 @@ exports.register = async (req, res) => {
     );
     console.log('role added with no issues');
 
-    res.status(201).json({ message: 'User registered successfully', user: newUser.rows[0] });
+    res.status(201).json({ message: 'User registered successfully', username: newUser.rows[0] });
   } catch (error) {
     console.error(error.message);
     res.status(500).send('Server error');
@@ -54,15 +54,15 @@ exports.login = async (req, res) => {
 
     // Create and assign token
     const token = jwt.sign(
-      { id: user.rows[0].id, email: user.rows[0].email,  role: user.rows[0].role},
+      { id: user.rows[0].id, username: user.rows[0].username , email: user.rows[0].email,  role: user.rows[0].role},
       process.env.JWT_SECRET,
       { expiresIn: '5h' }
     );
-    console.log(token);    
+    console.log(token.id);    
 
     res.json({ token });
 
-    console.log( role);  
+    console.log( user.role);  
 
   } catch (error) {
     console.error(error.message);
